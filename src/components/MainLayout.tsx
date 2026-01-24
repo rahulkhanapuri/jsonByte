@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Box, Tabs, Tab, Container, Paper } from '@mui/material';
 import Header from './Header';
 import JsonValidator from './JsonValidator';
 import JsonConverter from './JsonConverter';
+import { useColorMode } from '../theme/ThemeContext';
+import Snowfall from 'react-snowfall';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -22,7 +24,7 @@ function TabPanel(props: TabPanelProps) {
             {...other}
         >
             {value === index && (
-                <Box sx={{ p: 3 }}>
+                <Box sx={{ p: { xs: 2, md: 3 } }}>
                     {children}
                 </Box>
             )}
@@ -32,6 +34,25 @@ function TabPanel(props: TabPanelProps) {
 
 const MainLayout: React.FC = () => {
     const [value, setValue] = useState(0);
+    const { snowMode } = useColorMode();
+    const [wind, setWind] = useState<[number, number]>([0, 1]);
+
+    const handleMouseMove = useCallback((e: MouseEvent) => {
+        // Calculate wind based on horizontal mouse position
+        // Map mouse X (0 to window.innerWidth) => wind (-3 to 3)
+        const normalizedX = (e.clientX / window.innerWidth) * 2 - 1; // -1 to 1
+        const windValue = normalizedX * 3; // -3 to 3
+        setWind([windValue - 0.5, windValue + 0.5]);
+    }, []);
+
+    useEffect(() => {
+        if (snowMode) {
+            window.addEventListener('mousemove', handleMouseMove);
+        }
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+        };
+    }, [snowMode, handleMouseMove]);
 
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
@@ -39,6 +60,15 @@ const MainLayout: React.FC = () => {
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'background.default' }}>
+            {snowMode && <Snowfall
+                wind={wind}
+                style={{
+                    position: 'fixed',
+                    width: '100vw',
+                    height: '100vh',
+                    zIndex: 1000
+                }}
+            />}
             <Header />
             <Container maxWidth="xl" sx={{ mt: 4, mb: 4, flexGrow: 1 }}>
                 <Paper sx={{ width: '100%', mb: 2 }}>
