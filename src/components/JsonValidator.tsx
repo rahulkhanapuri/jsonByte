@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
-import { Box, Button, Paper, Alert, Stack, IconButton, Tooltip, useTheme, Grid, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { Box, Button, Paper, Alert, IconButton, Tooltip, useTheme, Select, MenuItem, FormControl, InputLabel, Chip, Grid } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
@@ -10,8 +10,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import DownloadIcon from '@mui/icons-material/Download';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import SearchIcon from '@mui/icons-material/Search';
 import { useSnackbar } from 'notistack';
+import { calculateJsonStats, formatBytes, type JsonStats } from '../utils/jsonStats';
+import { useMediaQuery } from '@mui/material';
 
 const JsonValidator: React.FC = () => {
     const [jsonInput, setJsonInput] = useState<string>('');
@@ -20,10 +21,15 @@ const JsonValidator: React.FC = () => {
     const [errorLine, setErrorLine] = useState<number | null>(null);
     const [isCopied, setIsCopied] = useState(false);
     const [spacing, setSpacing] = useState<number | string>(2); // 2, 4, or '\t'
+    const [jsonStats, setJsonStats] = useState<JsonStats | null>(null);
     const { enqueueSnackbar } = useSnackbar();
     const editorRef = useRef<any>(null);
 
     const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
+    const buttonSize = isMobile ? 'small' : isTablet ? 'medium' : 'medium';
+
 
     const handleEditorChange = (value: string | undefined) => {
         setJsonInput(value || '');
@@ -38,6 +44,7 @@ const JsonValidator: React.FC = () => {
             setIsValid(null);
             setErrorMessage('');
             setErrorLine(null);
+            setJsonStats(null);
             return;
         }
         try {
@@ -45,8 +52,13 @@ const JsonValidator: React.FC = () => {
             setIsValid(true);
             setErrorMessage('');
             setErrorLine(null);
+
+            // Calculate JSON statistics
+            const stats = calculateJsonStats(jsonInput);
+            setJsonStats(stats);
         } catch (e: any) {
             setIsValid(false);
+            setJsonStats(null);
             let msg = e.message;
             let lineNumber: number | null = null;
 
@@ -196,113 +208,135 @@ const JsonValidator: React.FC = () => {
         };
     };
 
+    const responsiveButtonSx = {
+        minHeight: isMobile ? 32 : 36,
+        fontSize: isMobile ? '0.7rem' : '0.8rem',
+        px: isMobile ? 1 : 2,
+    };
+
     return (
-        <Box sx={{ height: 'calc(100vh - 200px)', display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Grid container spacing={2} alignItems="center">
-                <Grid size={{ xs: 12, md: 'grow' }}>
-                    <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1} flexWrap="wrap" useFlexGap>
+        <Box sx={{
+            height: 'calc(100vh - 200px)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+            maxWidth: '1000px',
+            margin: '0 auto',
+            width: '100%'
+        }}>
+            <Grid container spacing={1.5}>
+                {/* Import */}
+                <Grid size={{ xs: 12, sm: 6, md: 'auto' }}>
+                    <Button
+                        fullWidth
+                        component="label"
+                        variant="outlined"
+                        size={buttonSize} sx={responsiveButtonSx}
+                        startIcon={<UploadFileIcon />}
+                    >
+                        Import
+                        <input type="file" hidden accept=".json" onChange={handleFileUpload} />
+                    </Button>
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 'auto' }}>
+                    <Tooltip title={!jsonInput ? "Enter JSON to enable" : "Validate JSON "}>
                         <Button
-                            component="label"
-                            variant="outlined"
-                            startIcon={<UploadFileIcon />}
-                        >
-                            Import
-                            <input type="file" hidden accept=".json" onChange={handleFileUpload} />
-                        </Button>
-                        <Button
+                            fullWidth
                             variant="outlined"
                             color={validateButtonStyle(isValid).color}
                             startIcon={validateButtonStyle(isValid).icon}
+                            size={buttonSize} sx={responsiveButtonSx}
                             onClick={validateJson}
                         >
                             Validate
                         </Button>
-                        <Tooltip title={!jsonInput ? "Enter JSON to enable" : "Format JSON"}>
-                            <span>
-                                <Button
-                                    variant="outlined"
-                                    color="primary"
-                                    startIcon={<AutoFixHighIcon />}
-                                    onClick={formatJson}
-                                    disabled={!jsonInput}
-                                >
-                                    Format
-                                </Button>
-                            </span>
-                        </Tooltip>
-                        <Tooltip title={!jsonInput ? "Enter JSON to enable" : "Compress/Minify JSON"}>
-                            <span>
-                                <Button
-                                    variant="outlined"
-                                    color="primary"
-                                    startIcon={<CompressIcon />}
-                                    onClick={compressJson}
-                                    disabled={!jsonInput}
-                                >
-                                    Compress
-                                </Button>
-                            </span>
-                        </Tooltip>
-                        <FormControl
-                            size="small"
-                            sx={{
-                                minWidth: 80,
-                                "& .MuiInputBase-root": {
-                                    height: 36, // 👈 controls overall height
-                                },
-                                "& .MuiSelect-select": {
-                                    padding: "4px 8px", // 👈 reduces inner spacing
-                                    display: "flex",
-                                    alignItems: "center",
-                                },
-                            }}
+                    </Tooltip>
+                </Grid>
+
+                <Grid size={{ xs: 12, sm: 6, md: 'auto' }}>
+                    <Tooltip title={!jsonInput ? "Enter JSON to enable" : "Format JSON"}>
+                        <Button
+                            fullWidth
+                            variant="outlined"
+                            size={buttonSize} sx={responsiveButtonSx}
+                            startIcon={<AutoFixHighIcon />}
+                            onClick={formatJson}
+                            disabled={!jsonInput}
                         >
-                            <InputLabel
-                                sx={{
-                                    top: "-4px",
-                                    fontSize: "0.75rem",
-                                }}
-                            >
-                                Spacing
-                            </InputLabel>
+                            Format
+                        </Button>
+                    </Tooltip>
+                </Grid>
 
-                            <Select
-                                value={spacing}
-                                label="Spacing"
-                                onChange={handleSpacingChange}
-                            >
-                                <MenuItem value={2}>2</MenuItem>
-                                <MenuItem value={4}>4</MenuItem>
-                                <MenuItem value="tab">Tab</MenuItem>
-                            </Select>
-                        </FormControl>
+                {/* Compress */}
+                <Grid size={{ xs: 12, sm: 6, md: 'auto' }}>
+                    <Tooltip title={!jsonInput ? "Enter JSON to enable" : "Compress / Minify JSON"}>
+                        <Button
+                            fullWidth
+                            variant="outlined"
+                            startIcon={<CompressIcon />}
+                            onClick={compressJson}
+                            disabled={!jsonInput}
+                            size={buttonSize} sx={responsiveButtonSx}
+                        >
+                            Compress
+                        </Button>
+                    </Tooltip>
+                </Grid>
 
-                        <Tooltip title={!jsonInput ? "Enter JSON to enable" : "Download JSON File"}>
-                            <span>
-                                <Button
-                                    variant="outlined"
-                                    startIcon={<DownloadIcon />}
-                                    onClick={handleDownload}
-                                    disabled={!jsonInput}
-                                >
-                                    Download
-                                </Button>
-                            </span>
-                        </Tooltip>
-                        <Tooltip title={!jsonInput ? "Enter JSON to enable" : "Clear JSON"}>
-                            <span>
-                                <Button
-                                    variant="outlined"
-                                    color="error"
-                                    startIcon={<DeleteIcon />}
-                                    onClick={clearEditor}
-                                    disabled={!jsonInput}
-                                >
-                                    Clear
-                                </Button>
-                            </span>
-                        </Tooltip>
-                    </Stack>
+                {/* Spacing Select */}
+                <Grid size={{ xs: 12, sm: 6, md: 'auto' }}>
+                    <FormControl
+                        fullWidth
+                        size="small"
+                        sx={{
+                            minWidth: { md: 75 },
+                            "& .MuiInputBase-root": {
+                                minHeight: isMobile ? 32 : 36,
+                                fontSize: isMobile ? "0.75rem" : "0.85rem",
+                            },
+                        }}
+                    >
+                        <InputLabel>Spacing</InputLabel>
+                        <Select
+                            value={spacing}
+                            label="Spacing"
+                            onChange={handleSpacingChange}
+                        >
+                            <MenuItem value={2}>2</MenuItem>
+                            <MenuItem value={4}>4</MenuItem>
+                            <MenuItem value="tab">Tab</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 'auto' }}>
+                    <Tooltip title={!jsonInput ? "Enter JSON to enable" : "Download JSON File"}>
+                        <Button
+                            fullWidth
+                            variant="outlined"
+                            startIcon={<DownloadIcon />}
+                            onClick={handleDownload}
+                            disabled={!jsonInput}
+                        >
+                            Download
+                        </Button>
+                    </Tooltip>
+                </Grid>
+
+                {/* Clear */}
+                <Grid size={{ xs: 12, sm: 6, md: 'auto' }}>
+                    <Tooltip title={!jsonInput ? "Enter JSON to enable" : "Clear JSON"}>
+                        <Button
+                            fullWidth
+                            variant="outlined"
+                            color="error"
+                            startIcon={<DeleteIcon />}
+                            onClick={clearEditor}
+                            disabled={!jsonInput}
+                        >
+                            Clear
+                        </Button>
+                    </Tooltip>
                 </Grid>
             </Grid>
 
@@ -368,7 +402,7 @@ const JsonValidator: React.FC = () => {
                     theme={theme.palette.mode === 'dark' ? "vs-dark" : "light"}
                     options={{
                         minimap: { enabled: false },
-                        fontSize: 14,
+                        fontSize: window.innerWidth < 600 ? 12 : 14,
                         formatOnPaste: true,
                         formatOnType: true,
                         automaticLayout: true,
@@ -377,8 +411,60 @@ const JsonValidator: React.FC = () => {
             </Paper>
 
             {isValid === true && (
-                <Alert severity="success" icon={<CheckCircleIcon fontSize="inherit" />} sx={{ ml: 'auto' }}>
-                    Valid JSON
+                <Alert
+                    severity="success"
+                    icon={<CheckCircleIcon fontSize="inherit" />}
+                    sx={{ ml: 'auto' }}
+                >
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
+                        <Box sx={{ fontWeight: 'bold' }}>Valid JSON</Box>
+                        {jsonStats && (
+                            <>
+                                <Box sx={{
+                                    width: '1px',
+                                    height: '16px',
+                                    bgcolor: 'success.dark',
+                                    opacity: 0.5,
+                                    mx: 0.5
+                                }} />
+                                <Chip
+                                    label={formatBytes(jsonStats.sizeBytes)}
+                                    size="small"
+                                    variant="outlined"
+                                    color="success"
+                                    sx={{ height: 24, fontSize: '0.75rem' }}
+                                />
+                                <Chip
+                                    label={`${jsonStats.totalKeys} key${jsonStats.totalKeys !== 1 ? 's' : ''}`}
+                                    size="small"
+                                    variant="outlined"
+                                    color="success"
+                                    sx={{ height: 24, fontSize: '0.75rem' }}
+                                />
+                                <Chip
+                                    label={`depth ${jsonStats.maxDepth}`}
+                                    size="small"
+                                    variant="outlined"
+                                    color="success"
+                                    sx={{ height: 24, fontSize: '0.75rem' }}
+                                />
+                                <Chip
+                                    label={`${jsonStats.objectCount} object${jsonStats.objectCount !== 1 ? 's' : ''}`}
+                                    size="small"
+                                    variant="outlined"
+                                    color="success"
+                                    sx={{ height: 24, fontSize: '0.75rem' }}
+                                />
+                                <Chip
+                                    label={`${jsonStats.arrayCount} array${jsonStats.arrayCount !== 1 ? 's' : ''}`}
+                                    size="small"
+                                    variant="outlined"
+                                    color="success"
+                                    sx={{ height: 24, fontSize: '0.75rem' }}
+                                />
+                            </>
+                        )}
+                    </Box>
                 </Alert>
             )}
             {isValid === false && (

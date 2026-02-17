@@ -1,17 +1,17 @@
 import React, { useState, useRef } from 'react';
 import Editor from '@monaco-editor/react';
-import { Box, Button, Select, MenuItem, Stack, FormControl, InputLabel, Alert, IconButton, Tooltip, Grid, useTheme } from '@mui/material';
+import { Box, Button, Select, MenuItem, FormControl, InputLabel, Alert, IconButton, Tooltip, useTheme, Grid } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import DownloadIcon from '@mui/icons-material/Download';
-import SearchIcon from '@mui/icons-material/Search';
 import yaml from 'js-yaml';
 import { js2xml } from 'xml-js';
 import Papa from 'papaparse';
 import { useSnackbar } from 'notistack';
+import { useMediaQuery } from "@mui/material";
 
 
 const JsonConverter: React.FC = () => {
@@ -24,6 +24,8 @@ const JsonConverter: React.FC = () => {
     const theme = useTheme();
     const inputEditorRef = useRef<any>(null);
     const outputEditorRef = useRef<any>(null);
+
+    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
     const handleConvert = () => {
         if (!inputJson.trim()) {
@@ -121,34 +123,45 @@ const JsonConverter: React.FC = () => {
     return (
         <Box sx={{ height: 'calc(100vh - 200px)', display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Grid container spacing={2} alignItems="center">
-                <Grid size={{ xs: 12, md: 'grow' }}>
-                    <Stack direction="row" spacing={2} alignItems="center" flexWrap="wrap" useFlexGap>
+                <Grid container spacing={1.5} alignItems="center">
+
+                    {/* Import Button */}
+                    <Grid size={{ xs: 12, sm: 6, md: "auto" }}>
                         <Button
+                            fullWidth={isMobile}
+                            size={isMobile ? "small" : "medium"}
                             component="label"
                             variant="outlined"
                             startIcon={<UploadFileIcon />}
+                            sx={{
+                                minHeight: isMobile ? 32 : 36,
+                                fontSize: isMobile ? "0.7rem" : "0.85rem",
+                            }}
                         >
-                            Import JSON
-                            <input type="file" hidden accept=".json" onChange={handleFileUpload} />
+                            {isMobile ? "Import" : "Import JSON"}
+                            <input
+                                type="file"
+                                hidden
+                                accept=".json"
+                                onChange={handleFileUpload}
+                            />
                         </Button>
-                        <FormControl size="small" sx={{
-                            minWidth: 100,
-                            "& .MuiInputBase-root": {
-                                height: 36, // 👈 controls overall height
-                            },
-                            "& .MuiSelect-select": {
-                                padding: "4px 8px", // 👈 reduces inner spacing
-                                display: "flex",
-                                alignItems: "center",
-                            },
-                        }}
+                    </Grid>
+
+                    {/* Target Format Select */}
+                    <Grid size={{ xs: 12, sm: 6, md: "auto" }}>
+                        <FormControl
+                            fullWidth={isMobile}
+                            size="small"
+                            sx={{
+                                minWidth: { md: 110 },
+                                "& .MuiInputBase-root": {
+                                    minHeight: isMobile ? 32 : 36,
+                                    fontSize: isMobile ? "0.75rem" : "0.85rem",
+                                },
+                            }}
                         >
-                            <InputLabel
-                                sx={{
-                                    top: "-4px",
-                                    fontSize: "0.75rem",
-                                }}
-                            >Target Format</InputLabel>
+                            <InputLabel>Target Format</InputLabel>
                             <Select
                                 value={targetFormat}
                                 label="Target Format"
@@ -159,20 +172,29 @@ const JsonConverter: React.FC = () => {
                                 <MenuItem value="csv">CSV</MenuItem>
                             </Select>
                         </FormControl>
+                    </Grid>
 
+                    {/* Convert Button */}
+                    <Grid size={{ xs: 12, sm: 6, md: "auto" }}>
                         <Button
+                            fullWidth={isMobile}
+                            size={isMobile ? "small" : "medium"}
                             variant="contained"
                             color="primary"
                             startIcon={<PlayArrowIcon />}
                             onClick={handleConvert}
                             disabled={!inputJson}
+                            sx={{
+                                minHeight: isMobile ? 32 : 36,
+                                fontSize: isMobile ? "0.7rem" : "0.85rem",
+                            }}
                         >
                             Convert
                         </Button>
+                    </Grid>
 
-
-                    </Stack>
                 </Grid>
+
 
                 <Grid size={{ xs: 12, md: 'auto' }} sx={{ display: 'flex', gap: 1 }}>
                     <Tooltip title="Download Output">

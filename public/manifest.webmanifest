@@ -1,0 +1,23 @@
+{
+    "name": "JsonByte – JSON Validator & Converter",
+    "short_name": "JsonByte",
+    "description": "Free online JSON validator and converter. Validate, format, and convert JSON to YAML, CSV, XML and more.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#1976d2",
+    "lang": "en",
+    "icons": [
+        {
+            "src": "/jsonByte.png",
+            "sizes": "any",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": [
+        "developer",
+        "utilities",
+        "productivity"
+    ]
+}
