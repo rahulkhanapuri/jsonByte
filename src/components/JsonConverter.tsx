@@ -7,7 +7,18 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import DownloadIcon from '@mui/icons-material/Download';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import yaml from 'js-yaml';
+
+const exampleJson = JSON.stringify(
+    {
+        user: { id: 101, name: "Rahul", role: "admin", active: true },
+        tools: ["Validator", "Formatter", "Converter"],
+        settings: { theme: "dark", notifications: true }
+    },
+    null,
+    2
+);
 import { js2xml } from 'xml-js';
 import Papa from 'papaparse';
 import { useSnackbar } from 'notistack';
@@ -79,6 +90,10 @@ const JsonConverter: React.FC<JsonConverterProps> = ({ defaultTargetFormat = 'ya
             setTimeout(() => setIsCopied(false), 3000);
             enqueueSnackbar('Copied to clipboard', { variant: 'success' });
         }
+    };
+
+    const loadExample = () => {
+        setInputJson(exampleJson);
     };
 
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -154,6 +169,23 @@ const JsonConverter: React.FC<JsonConverterProps> = ({ defaultTargetFormat = 'ya
                                 accept=".json"
                                 onChange={handleFileUpload}
                             />
+                        </Button>
+                    </Grid>
+
+                    {/* Load Example Button */}
+                    <Grid size={{ xs: 12, sm: 6, md: "auto" }}>
+                        <Button
+                            fullWidth={isMobile}
+                            size={isMobile ? "small" : "medium"}
+                            variant="outlined"
+                            startIcon={<AutoAwesomeIcon />}
+                            onClick={loadExample}
+                            sx={{
+                                minHeight: isMobile ? 32 : 36,
+                                fontSize: isMobile ? "0.7rem" : "0.85rem",
+                            }}
+                        >
+                            Load Example
                         </Button>
                     </Grid>
 

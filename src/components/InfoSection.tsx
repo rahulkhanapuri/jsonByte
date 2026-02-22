@@ -14,6 +14,8 @@ import SpeedIcon from '@mui/icons-material/Speed';
 import SecurityIcon from '@mui/icons-material/Security';
 import DevicesIcon from '@mui/icons-material/Devices';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
+import DataUsageIcon from '@mui/icons-material/DataUsage';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 
 const features = [
     {
@@ -32,9 +34,19 @@ const features = [
         desc: 'Strip all whitespace from your JSON to produce compact output — perfect for APIs and data transfer.',
     },
     {
+        icon: <DataUsageIcon color="primary" sx={{ fontSize: 36 }} />,
+        title: 'Check JSON Size',
+        desc: 'Instantly measure the exact size of your JSON in Bytes, KB, and MB. View character counts, lines, and minified size comparisons.',
+    },
+    {
         icon: <SwapHorizIcon color="primary" sx={{ fontSize: 36 }} />,
         title: 'Convert JSON to YAML, CSV & XML',
         desc: 'Seamlessly convert JSON to YAML, CSV, or XML with a single click. Great for config files and data pipelines.',
+    },
+    {
+        icon: <AccountTreeIcon color="primary" sx={{ fontSize: 36 }} />,
+        title: 'JSON Graphical View',
+        desc: 'Visualize your JSON dynamically. View complex nested structures as an easy-to-understand interactive tree graph.',
     },
     {
         icon: <SpeedIcon color="primary" sx={{ fontSize: 36 }} />,
@@ -71,6 +83,14 @@ const faqs = [
         a: 'JsonByte supports converting JSON to YAML, CSV, and XML. More formats may be added in the future.',
     },
     {
+        q: 'Can I view my JSON visually?',
+        a: 'Yes, our JSON Graphical View tool allows you to convert complex JSON data into an interactive, visual tree structure making it much easier to understand data relationships.',
+    },
+    {
+        q: 'Can I check how large my JSON file is?',
+        a: 'Yes, just switch to the "Size Checker" tab. It will instantly calculate the exact size in Bytes, KB, and MB, along with lines and characters.',
+    },
+    {
         q: 'Can I use JsonByte on mobile?',
         a: 'Yes! JsonByte is fully responsive and works great on smartphones and tablets.',
     },
@@ -84,7 +104,7 @@ const steps = [
     { step: '1', title: 'Paste or type your JSON', desc: 'Enter your JSON data into the editor on the left.' },
     { step: '2', title: 'Validate instantly', desc: 'JsonByte checks your JSON in real time and highlights any errors.' },
     { step: '3', title: 'Format or minify', desc: 'Click "Format" to beautify or "Minify" to compress your JSON.' },
-    { step: '4', title: 'Convert if needed', desc: 'Switch to the Converter tab to export your JSON as YAML, CSV, or XML.' },
+    { step: '4', title: 'Convert, visualize or measure', desc: 'Switch tabs to convert your JSON, view it as a graph, or check its exact file size.' },
 ];
 
 const InfoSection: React.FC = () => {
@@ -104,7 +124,7 @@ const InfoSection: React.FC = () => {
                     >
                         <strong>JsonByte</strong> is a free, fast, and privacy-first online JSON tool designed for developers,
                         data engineers, and anyone who works with JSON data. Validate your JSON, format it for readability,
-                        minify it for production, or convert it to YAML, CSV, and XML — all without ever leaving your browser.
+                        check its exact size (Bytes/KB/MB), minify it for production, or convert it to YAML, CSV, and XML — all without ever leaving your browser.
                         No signup. No install. No data shared.
                     </Typography>
                 </Box>
