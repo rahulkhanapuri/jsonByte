@@ -17,7 +17,15 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const colorMode = useMemo(
         () => ({
             toggleColorMode: () => {
-                setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+                setMode((prevMode) => {
+                    if (prevMode === 'light') {
+                        return 'dark'
+                    } else {
+                        setSnowMode(false)
+                        return 'light'
+
+                    }
+                });
             },
             snowMode,
             toggleSnowMode: () => {
