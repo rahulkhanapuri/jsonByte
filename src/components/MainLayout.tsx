@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Box, Tabs, Tab, Container, Paper } from '@mui/material';
 import Header from './Header';
+import Footer from './Footer';
 import JsonValidator from './JsonValidator';
 import JsonConverter from './JsonConverter';
 import { useColorMode } from '../theme/ThemeContext';
@@ -70,11 +71,11 @@ const MainLayout: React.FC = () => {
                 }}
             />}
             <Header />
-            <Container maxWidth="xl" sx={{ mt: 4, mb: 4, flexGrow: 1 }}>
+            <Container component="main" maxWidth="xl" sx={{ mt: 4, mb: 4, flexGrow: 1 }}>
                 <Paper sx={{ width: '100%', mb: 2 }}>
-                    <Tabs value={value} onChange={handleChange} indicatorColor="primary" textColor="primary" centered>
-                        <Tab label="Validator" />
-                        <Tab label="Converter" />
+                    <Tabs value={value} onChange={handleChange} indicatorColor="primary" textColor="primary" centered aria-label="JSON tools">
+                        <Tab label="JSON Validator" id="simple-tab-0" aria-controls="simple-tabpanel-0" />
+                        <Tab label="JSON Converter" id="simple-tab-1" aria-controls="simple-tabpanel-1" />
                     </Tabs>
                 </Paper>
                 <TabPanel value={value} index={0}>
@@ -84,6 +85,7 @@ const MainLayout: React.FC = () => {
                     <JsonConverter />
                 </TabPanel>
             </Container>
+            <Footer />
         </Box>
     );
 };

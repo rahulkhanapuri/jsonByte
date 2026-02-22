@@ -1,13 +1,10 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Box, IconButton, Tooltip, useTheme } from '@mui/material';
-import CodeIcon from '@mui/icons-material/Code';
-import GitHubIcon from '@mui/icons-material/GitHub';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import { useColorMode } from '../theme/ThemeContext';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
-import DataObjectIcon from '@mui/icons-material/DataObject';
-import DataArrayIcon from '@mui/icons-material/DataArray';
+
 
 const Header: React.FC = () => {
     const { toggleColorMode, toggleSnowMode, snowMode } = useColorMode();
@@ -17,28 +14,32 @@ const Header: React.FC = () => {
         <AppBar position="sticky" color="default" elevation={0} sx={{ borderBottom: 1, borderColor: 'divider', top: 0, zIndex: 1100, bgcolor: 'background.paper' }}>
             <Toolbar>
                 <Box display="flex" alignItems="center" sx={{ flexGrow: 1 }}>
-                    <DataObjectIcon
+                    <Box
+                        component="img"
+                        src="/jsonByte.png"
+                        alt="JsonByte logo"
                         sx={{
-                            mr: 1,
-                            fontSize: 28,
-                            color: 'primary.main',
+                            width: 40,
+                            height: 40,
+                            objectFit: 'contain',
                         }}
-                        />
+                    />
 
                     <Typography
                         variant="h6"
-                        component="div"
+                        component="h1"
                         sx={{
                             fontWeight: 700,
                             letterSpacing: "0.5px",
                             color: "text.primary",
+                            fontSize: 20,
+                            margin: 0,
                         }}
                     >
-                        JSON{" "}
+                        Json
                         <Box component="span" sx={{ color: "primary.main" }}>
-                        LAB
-                        </Box>{" "}
-                        PRO
+                            Byte
+                        </Box>
                     </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', gap: 1 }}>

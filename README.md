@@ -1,6 +1,16 @@
-# React + TypeScript + Vite
+# JsonByte
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A powerful JSON validator and converter tool built with React + TypeScript + Vite.
+
+## About
+
+JsonByte is a modern web application for validating, formatting, and converting JSON data. It provides an intuitive interface with real-time validation and support for multiple data formats.
+
+---
+
+## Technical Stack
+
+This project uses React + TypeScript + Vite with HMR and ESLint rules.
 
 Currently, two official plugins are available:
 
