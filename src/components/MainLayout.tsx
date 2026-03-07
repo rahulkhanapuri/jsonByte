@@ -4,8 +4,10 @@ import Header from './Header';
 import Footer from './Footer';
 import JsonValidator from './JsonValidator';
 import JsonConverter from './JsonConverter';
+import InfoSection from './InfoSection';
 import { useColorMode } from '../theme/ThemeContext';
 import Snowfall from 'react-snowfall';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -34,15 +36,62 @@ function TabPanel(props: TabPanelProps) {
 }
 
 const MainLayout: React.FC = () => {
-    const [value, setValue] = useState(0);
+    const location = useLocation();
+    const navigate = useNavigate();
     const { snowMode } = useColorMode();
     const [wind, setWind] = useState<[number, number]>([0, 1]);
 
+    // Map routes to tab indices
+    const getTabIndex = (pathname: string) => {
+        if (pathname === '/json-to-csv' || pathname === '/json-to-xml' || pathname === '/json-to-yaml') return 1;
+        return 0; // default to Validator for /, /json-validator, /json-formatter, /json-minifier
+    };
+
+    const value = getTabIndex(location.pathname);
+
+    // Update document title and meta tags based on route for SEO
+    useEffect(() => {
+        let title = "JsonByte – Free Online JSON Validator & Converter";
+        let desc = "100% free online JSON tools — validate, format, beautify, minify, and convert JSON to YAML, CSV, XML and more.";
+
+        switch (location.pathname) {
+            case '/json-validator':
+                title = "Free JSON Validator Online | JsonByte";
+                desc = "Quickly validate your JSON data online. Pinpoint syntax errors, highlight missing brackets, and format your JSON code — all for free.";
+                break;
+            case '/json-formatter':
+                title = "Free JSON Formatter & Beautifier | JsonByte";
+                desc = "Beautify, format, and organize unreadable JSON code instantly. The definitive online JSON formatter, 100% free.";
+                break;
+            case '/json-minifier':
+                title = "Free JSON Minifier & Compressor | JsonByte";
+                desc = "Compress JSON data and remove all spaces/newlines for smaller file sizes. Completely free online JSON minifer tool.";
+                break;
+            case '/json-to-csv':
+                title = "Convert JSON to CSV Online Free | JsonByte";
+                desc = "Instantly convert JSON arrays to CSV format online. Fast, secure, browser-based conversion. No registration required.";
+                break;
+            case '/json-to-xml':
+                title = "Convert JSON to XML Online Free | JsonByte";
+                desc = "Instantly convert JSON data to XML format online. Fast, secure, browser-based conversion. No registration required.";
+                break;
+            case '/json-to-yaml':
+                title = "Convert JSON to YAML Online Free | JsonByte";
+                desc = "Instantly convert JSON data to YAML format online. Fast, secure, browser-based conversion. No registration required.";
+                break;
+        }
+
+        document.title = title;
+
+        const metaDescriptionTag: HTMLMetaElement | null = document.querySelector('meta[name="description"]');
+        if (metaDescriptionTag) {
+            metaDescriptionTag.content = desc;
+        }
+    }, [location.pathname]);
+
     const handleMouseMove = useCallback((e: MouseEvent) => {
-        // Calculate wind based on horizontal mouse position
-        // Map mouse X (0 to window.innerWidth) => wind (-3 to 3)
-        const normalizedX = (e.clientX / window.innerWidth) * 2 - 1; // -1 to 1
-        const windValue = normalizedX * 3; // -3 to 3
+        const normalizedX = (e.clientX / window.innerWidth) * 2 - 1;
+        const windValue = normalizedX * 3;
         setWind([windValue - 0.5, windValue + 0.5]);
     }, []);
 
@@ -56,7 +105,12 @@ const MainLayout: React.FC = () => {
     }, [snowMode, handleMouseMove]);
 
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
+        // Change URL based on which tab is selected
+        if (newValue === 0) {
+            navigate('/json-validator');
+        } else if (newValue === 1) {
+            navigate('/json-to-csv');
+        }
     };
 
     return (
@@ -82,8 +136,13 @@ const MainLayout: React.FC = () => {
                     <JsonValidator />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <JsonConverter />
+                    <JsonConverter defaultTargetFormat={
+                        location.pathname === '/json-to-csv' ? 'csv' :
+                            location.pathname === '/json-to-xml' ? 'xml' :
+                                location.pathname === '/json-to-yaml' ? 'yaml' : 'yaml'
+                    } />
                 </TabPanel>
+                <InfoSection />
             </Container>
             <Footer />
         </Box>

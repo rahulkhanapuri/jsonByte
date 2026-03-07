@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
 import { Box, Button, Select, MenuItem, FormControl, InputLabel, Alert, IconButton, Tooltip, useTheme, Grid } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -14,10 +14,14 @@ import { useSnackbar } from 'notistack';
 import { useMediaQuery } from "@mui/material";
 
 
-const JsonConverter: React.FC = () => {
+interface JsonConverterProps {
+    defaultTargetFormat?: string;
+}
+
+const JsonConverter: React.FC<JsonConverterProps> = ({ defaultTargetFormat = 'yaml' }) => {
     const [inputJson, setInputJson] = useState<string>('');
     const [outputContent, setOutputContent] = useState<string>('');
-    const [targetFormat, setTargetFormat] = useState<string>('yaml');
+    const [targetFormat, setTargetFormat] = useState<string>(defaultTargetFormat);
     const [error, setError] = useState<string>('');
     const [isCopied, setIsCopied] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
@@ -26,6 +30,11 @@ const JsonConverter: React.FC = () => {
     const outputEditorRef = useRef<any>(null);
 
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+    // Update targetFormat if defaultTargetFormat prop changes (e.g. route navigation)
+    useEffect(() => {
+        setTargetFormat(defaultTargetFormat);
+    }, [defaultTargetFormat]);
 
     const handleConvert = () => {
         if (!inputJson.trim()) {
