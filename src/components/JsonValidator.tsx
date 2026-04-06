@@ -10,9 +10,20 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import DownloadIcon from '@mui/icons-material/Download';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { useSnackbar } from 'notistack';
 import { calculateJsonStats, formatBytes, type JsonStats } from '../utils/jsonStats';
 import { useMediaQuery } from '@mui/material';
+
+const exampleJson = JSON.stringify(
+    {
+        user: { id: 101, name: "Rahul", role: "admin", active: true },
+        tools: ["Validator", "Formatter", "Converter"],
+        settings: { theme: "dark", notifications: true }
+    },
+    null,
+    2
+);
 
 const JsonValidator: React.FC = () => {
     const [jsonInput, setJsonInput] = useState<string>('');
@@ -37,6 +48,13 @@ const JsonValidator: React.FC = () => {
         setErrorMessage('');
         setErrorLine(null); // Clear error line highlighting
         if (isCopied) setIsCopied(false);
+    };
+
+    const loadExample = () => {
+        setJsonInput(exampleJson);
+        setIsValid(null);
+        setErrorMessage('');
+        setErrorLine(null);
     };
 
     const validateJson = () => {
@@ -236,6 +254,17 @@ const JsonValidator: React.FC = () => {
                     >
                         Import
                         <input type="file" hidden accept=".json" onChange={handleFileUpload} />
+                    </Button>
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 'auto' }}>
+                    <Button
+                        fullWidth
+                        variant="outlined"
+                        size={buttonSize} sx={responsiveButtonSx}
+                        startIcon={<AutoAwesomeIcon />}
+                        onClick={loadExample}
+                    >
+                        Load Example
                     </Button>
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6, md: 'auto' }}>
