@@ -18,9 +18,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary SEO -->
-  <title>JsonByte – Free Online JSON Validator &amp; Converter</title>
+  <title>JsonByte - Free Online JSON Validator &amp; Converter</title>
   <meta name="description"
-    content="JsonByte is a 100% free online JSON tool — no signup, no install. Instantly validate, format, beautify, minify, visualize graphically, check size (Bytes/KB/MB), and convert JSON to YAML, CSV, XML and more." />
+    content="JsonByte is a 100% free online JSON tool with validation, formatting, minifying, graphical viewing, size checking, and JSON conversion features." />
   <meta name="keywords"
     content="Free JSON validator, free JSON formatter, online JSON tool, JSON validator free, JSON beautifier, JSON minifier, JSON compresser, JSON size checker, JSON size calculater, check json size, json size in bytes, json size in kb, json size in mb, JSON linter, JSON to YAML converter, JSON to CSV converter, JSON to XML converter, JSON checker, JSON parser, format JSON online, validate JSON free, JSON pretty print, JSON editor online, free developer tools, json validator online free, json validator with error line, json graphical view, visualize json, json tree visualizer, json structure viewer, json size calculater, json size viewer, online free for size cheker" />
   <meta name="author" content="JsonByte" />
@@ -33,9 +33,9 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://jsonbyte.com/" />
   <meta property="og:site_name" content="JsonByte" />
-  <meta property="og:title" content="JsonByte – Free Online JSON Validator, Formatter &amp; Converter" />
+  <meta property="og:title" content="JsonByte - Free Online JSON Validator, Formatter &amp; Converter" />
   <meta property="og:description"
-    content="100% free online JSON tools — validate, format, beautify, minify, check size, and convert JSON to YAML, CSV, XML and more. No signup. No install." />
+    content="100% free online JSON tools to validate, format, beautify, minify, check size, and convert JSON to YAML, CSV, XML and more." />
   <meta property="og:image" content="https://jsonbyte.com/jsonByte.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -43,14 +43,26 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="JsonByte – Free Online JSON Validator, Formatter &amp; Converter" />
+  <meta name="twitter:title" content="JsonByte - Free Online JSON Validator, Formatter &amp; Converter" />
   <meta name="twitter:description"
-    content="100% free online JSON tools — validate, format, beautify, minify, check size, and convert JSON to YAML, CSV, XML and more. No signup. No install." />
+    content="100% free online JSON tools to validate, format, beautify, minify, check size, and convert JSON to YAML, CSV, XML and more." />
   <meta name="twitter:image" content="https://jsonbyte.com/jsonByte.png" />
 
   <!-- PWA Manifest -->
   <link rel="manifest" href="/manifest.webmanifest" />
   <meta name="theme-color" content="#1976d2" />
+
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-N7KW37CV');
+  </script>
+  <!-- End Google Tag Manager -->
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -59,7 +71,7 @@
       "@type": "WebApplication",
       "name": "JsonByte",
       "url": "https://jsonbyte.com/",
-      "description": "Free online JSON validator, sizer, and converter. Validate, format, check size, and convert JSON to YAML, CSV, XML, and more — instantly in your browser.",
+      "description": "Free online JSON validator, sizer, and converter. Validate, format, check size, and convert JSON to YAML, CSV, XML, and more instantly in your browser.",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "Any",
       "browserRequirements": "Requires JavaScript",
@@ -86,12 +98,19 @@
         "url": "https://jsonbyte.com/"
       }
     }
-    </script>
+  </script>
 </head>
 
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N7KW37CV" height="0" width="0"
+      style="display:none;visibility:hidden">
+    </iframe>
+  </noscript>
+  <!-- End Google Tag Manager (noscript) -->
 </body>
 
 </html>
