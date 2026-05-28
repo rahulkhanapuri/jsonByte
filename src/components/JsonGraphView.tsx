@@ -19,6 +19,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import ErrorIcon from '@mui/icons-material/Error';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useGraphViewStore } from '../stores/graphViewStore';
 
 
 type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
@@ -63,12 +64,13 @@ const nodeTypes = {
 const JsonGraphView: React.FC = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const [jsonInput, setJsonInput] = useState('');
     const [graphData, setGraphData] = useState<JsonValue | null>(null);
     const [error, setError] = useState('');
 
     const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+    //zustand store for json input
+    const { jsonInput, setJsonInput } = useGraphViewStore();
 
     useEffect(() => {
         if (graphData) {
