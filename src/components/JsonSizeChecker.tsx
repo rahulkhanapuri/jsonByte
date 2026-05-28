@@ -11,7 +11,7 @@ import DataUsageIcon from '@mui/icons-material/DataUsage';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { useSnackbar } from 'notistack';
 import { useMediaQuery } from '@mui/material';
-
+import {usesizeValidatorStore} from '../stores/sizeValidatorStore';
 const exampleJson = JSON.stringify(
     {
         user: { id: 101, name: "Rahul", role: "admin", active: true },
@@ -31,9 +31,7 @@ interface SizeInfo {
 }
 
 const JsonSizeChecker: React.FC = () => {
-    const [jsonInput, setJsonInput] = useState<string>('');
-    const [sizeInfo, setSizeInfo] = useState<SizeInfo | null>(null);
-    const [minifiedSize, setMinifiedSize] = useState<SizeInfo | null>(null);
+    const { jsonInput, setJsonInput, sizeInfo, setSizeInfo, minifiedSize, setMinifiedSize } = usesizeValidatorStore();
     const [isCopied, setIsCopied] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
     const editorRef = useRef<any>(null);

@@ -14,6 +14,7 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { useSnackbar } from 'notistack';
 import { calculateJsonStats, formatBytes, type JsonStats } from '../utils/jsonStats';
 import { useMediaQuery } from '@mui/material';
+import { useValidatorStore } from '../stores/validatorStore';
 
 const exampleJson = JSON.stringify(
     {
@@ -26,7 +27,6 @@ const exampleJson = JSON.stringify(
 );
 
 const JsonValidator: React.FC = () => {
-    const [jsonInput, setJsonInput] = useState<string>('');
     const [isValid, setIsValid] = useState<boolean | null>(null);
     const [errorMessage, setErrorMessage] = useState<string>('');
     const [errorLine, setErrorLine] = useState<number | null>(null);
@@ -40,6 +40,9 @@ const JsonValidator: React.FC = () => {
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
     const buttonSize = isMobile ? 'small' : isTablet ? 'medium' : 'medium';
+
+    //zustand store
+    const { jsonInput, setJsonInput, reset } = useValidatorStore();
 
 
     const handleEditorChange = (value: string | undefined) => {

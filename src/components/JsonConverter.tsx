@@ -23,14 +23,13 @@ import { js2xml } from 'xml-js';
 import Papa from 'papaparse';
 import { useSnackbar } from 'notistack';
 import { useMediaQuery } from "@mui/material";
-
+import { useConverterStore } from '../stores/converterStore';
 
 interface JsonConverterProps {
     defaultTargetFormat?: string;
 }
 
 const JsonConverter: React.FC<JsonConverterProps> = ({ defaultTargetFormat = 'yaml' }) => {
-    const [inputJson, setInputJson] = useState<string>('');
     const [outputContent, setOutputContent] = useState<string>('');
     const [targetFormat, setTargetFormat] = useState<string>(defaultTargetFormat);
     const [error, setError] = useState<string>('');
@@ -39,6 +38,7 @@ const JsonConverter: React.FC<JsonConverterProps> = ({ defaultTargetFormat = 'ya
     const theme = useTheme();
     const inputEditorRef = useRef<any>(null);
     const outputEditorRef = useRef<any>(null);
+    const { jsonInput, setJsonInput } = useConverterStore();
 
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -48,14 +48,14 @@ const JsonConverter: React.FC<JsonConverterProps> = ({ defaultTargetFormat = 'ya
     }, [defaultTargetFormat]);
 
     const handleConvert = () => {
-        if (!inputJson.trim()) {
+        if (!jsonInput.trim()) {
             setOutputContent('');
             setError('');
             return;
         }
 
         try {
-            const parsed = JSON.parse(inputJson);
+            const parsed = JSON.parse(jsonInput);
             setError('');
             let result = '';
 
@@ -93,7 +93,7 @@ const JsonConverter: React.FC<JsonConverterProps> = ({ defaultTargetFormat = 'ya
     };
 
     const loadExample = () => {
-        setInputJson(exampleJson);
+        setJsonInput(exampleJson);
     };
 
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,7 +103,7 @@ const JsonConverter: React.FC<JsonConverterProps> = ({ defaultTargetFormat = 'ya
         const reader = new FileReader();
         reader.onload = (e) => {
             const content = e.target?.result as string;
-            setInputJson(content);
+            setJsonInput(content);
             // Optional: don't auto-convert on load, let user click convert
         };
         reader.readAsText(file);
@@ -224,7 +224,7 @@ const JsonConverter: React.FC<JsonConverterProps> = ({ defaultTargetFormat = 'ya
                             color="primary"
                             startIcon={<PlayArrowIcon />}
                             onClick={handleConvert}
-                            disabled={!inputJson}
+                            disabled={!jsonInput}
                             sx={{
                                 minHeight: isMobile ? 32 : 36,
                                 fontSize: isMobile ? "0.7rem" : "0.85rem",
@@ -255,8 +255,8 @@ const JsonConverter: React.FC<JsonConverterProps> = ({ defaultTargetFormat = 'ya
                         <Editor
                             height="100%"
                             defaultLanguage="json"
-                            value={inputJson}
-                            onChange={(val) => setInputJson(val || '')}
+                            value={jsonInput}
+                            onChange={(val) => setJsonInput(val || '')}
                             onMount={handleInputEditorDidMount}
                             theme={theme.palette.mode === 'dark' ? "vs-dark" : "light"}
                             options={{ minimap: { enabled: false }, automaticLayout: true }}
