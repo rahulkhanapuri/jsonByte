@@ -27,7 +27,7 @@ type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string
 const exampleJson = JSON.stringify(
     {
         app: "JsonByte",
-        version: "1.0.0",
+        version: "1.0.2",
         generatedAt: "2026-04-05T12:30:00Z",
         user: {
             id: 101,

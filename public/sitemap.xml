@@ -73,6 +73,24 @@
 </url>
 
 <url>
+<loc>https://jsonbyte.com/about</loc>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+
+<url>
+<loc>https://jsonbyte.com/contact</loc>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+
+<url>
+<loc>https://jsonbyte.com/privacy-policy</loc>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+
+<url>
 <loc>https://jsonbyte.com/llms.txt</loc>
 <changefreq>monthly</changefreq>
 <priority>0.8</priority>

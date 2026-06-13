@@ -2,6 +2,9 @@ import { CssBaseline } from '@mui/material';
 import { SnackbarProvider } from 'notistack';
 import { ThemeProvider } from './theme/ThemeContext';
 import MainLayout from './components/MainLayout';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import AboutPage from './components/AboutPage';
+import ContactPage from './components/ContactPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 function App() {
   return (
@@ -22,6 +25,9 @@ function App() {
             <Route path="/json-size-in-kb" element={<MainLayout />} />
             <Route path="/json-size-in-mb" element={<MainLayout />} />
             <Route path="/json-graphical-view" element={<MainLayout />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
             <Route path="*" element={<MainLayout />} />
           </Routes>
         </BrowserRouter>

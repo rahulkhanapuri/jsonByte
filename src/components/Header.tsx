@@ -4,6 +4,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import { useColorMode } from '../theme/ThemeContext';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import MenuIcon from '@mui/icons-material/Menu';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -294,6 +295,18 @@ const Header: React.FC = () => {
                     ))}
                 </Menu>
                 <Box sx={{ display: 'flex', gap: 1, ml: { xs: 0, md: 1 } }}>
+                    <Tooltip title="View source on GitHub">
+                        <IconButton
+                            color="inherit"
+                            component="a"
+                            href="https://github.com/rahulkhanapuri/jsonByte"
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label="GitHub repository"
+                        >
+                            <GitHubIcon />
+                        </IconButton>
+                    </Tooltip>
                     {theme.palette.mode === 'dark' ? <Tooltip title={snowMode ? "Disable Snow" : "Enable Snow"}>
                         <IconButton onClick={toggleSnowMode} color={snowMode ? "primary" : "inherit"}>
                             <AcUnitIcon />
@@ -304,11 +317,6 @@ const Header: React.FC = () => {
                             {theme.palette.mode === 'dark' ? <DarkModeIcon /> : <LightModeIcon />}
                         </IconButton>
                     </Tooltip>
-                    {/* <Tooltip title="View Source">
-                        <IconButton color="inherit" component="a" href="#" target="_blank">
-                            <GitHubIcon />
-                        </IconButton>
-                    </Tooltip> */}
                 </Box>
             </Toolbar>
         </AppBar>
