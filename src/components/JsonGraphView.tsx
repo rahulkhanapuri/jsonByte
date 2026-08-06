@@ -135,7 +135,15 @@ const JsonGraphView: React.FC = () => {
     };
 
     return (
-        <Box sx={{ height: { xs: 'auto', lg: 'calc(100vh - 120px)' }, minHeight: { xs: 'calc(100vh - 120px)', lg: 0 }, display: 'flex', flexDirection: 'column', width: '100%' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
+            <Box sx={{ mb: 1, textAlign: { xs: 'left', sm: 'center' } }}>
+                <Typography variant="h4" component="h1" fontWeight={800} gutterBottom>
+                    JSON Graphical View & Interactive Tree Explorer
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    Visualize complex JSON objects as interactive node graphs. Expand, collapse, and explore nested schemas visually.
+                </Typography>
+            </Box>
 
             <Grid container spacing={1.5} sx={{ mb: 1 }}>
                 <Grid size={{ xs: 12, sm: 6, md: 'auto' }}>
@@ -172,7 +180,7 @@ const JsonGraphView: React.FC = () => {
                 </Alert>
             )}
 
-            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', lg: 'row' }, flexGrow: 1, minHeight: 0, gap: 0, borderTop: '1px solid', borderColor: 'divider' }}>
+            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', lg: 'row' }, height: { xs: '700px', lg: '550px' }, gap: 0, borderTop: '1px solid', borderColor: 'divider', border: 1, borderRadius: 2, overflow: 'hidden' }}>
                 {/* Left Editor Pane */}
                 <Box sx={{
                     resize: { lg: 'horizontal' },

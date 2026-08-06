@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
-import { Box, Button, Select, MenuItem, FormControl, InputLabel, Alert, IconButton, Tooltip, useTheme, Grid } from '@mui/material';
+import { Box, Button, Select, MenuItem, FormControl, InputLabel, Alert, IconButton, Tooltip, useTheme, Grid, Typography } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -145,7 +145,15 @@ const JsonConverter: React.FC<JsonConverterProps> = ({ defaultTargetFormat = 'ya
     };
 
     return (
-        <Box sx={{ height: 'calc(100vh - 200px)', display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
+            <Box sx={{ mb: 1, textAlign: { xs: 'left', sm: 'center' } }}>
+                <Typography variant="h4" component="h1" fontWeight={800} gutterBottom>
+                    Free Online JSON Converter
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    Seamlessly convert JSON data to CSV, YAML, and XML formats directly in your browser. 100% fast & private.
+                </Typography>
+            </Box>
             <Grid container spacing={2} alignItems="center">
                 <Grid container spacing={1.5} alignItems="center">
 
@@ -248,7 +256,7 @@ const JsonConverter: React.FC<JsonConverterProps> = ({ defaultTargetFormat = 'ya
 
             {error && <Alert severity="error">{error}</Alert>}
 
-            <Grid container spacing={2} sx={{ flexGrow: 1, minHeight: 0 }}>
+            <Grid container spacing={2} sx={{ height: { xs: '380px', md: '460px' } }}>
                 {/* Input Editor */}
                 <Grid size={{ xs: 12, md: 5.5 }} sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Box sx={{ flexGrow: 1, border: '1px solid', borderColor: 'divider', height: '100%' }}>

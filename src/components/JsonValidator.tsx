@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
-import { Box, Button, Paper, Alert, IconButton, Tooltip, useTheme, Select, MenuItem, FormControl, InputLabel, Chip, Grid } from '@mui/material';
+import { Box, Button, Paper, Alert, IconButton, Tooltip, useTheme, Select, MenuItem, FormControl, InputLabel, Chip, Grid, Typography } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
@@ -237,14 +237,22 @@ const JsonValidator: React.FC = () => {
 
     return (
         <Box sx={{
-            height: 'calc(100vh - 200px)',
             display: 'flex',
             flexDirection: 'column',
             gap: 2,
-            maxWidth: '1000px',
+            maxWidth: '1100px',
             margin: '0 auto',
             width: '100%'
         }}>
+            <Box sx={{ mb: 1, textAlign: { xs: 'left', sm: 'center' } }}>
+                <Typography variant="h4" component="h1" fontWeight={800} gutterBottom>
+                    Free Online JSON Validator & Formatter
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    Validate, pretty-print, and minify JSON data in real time with line-by-line error highlighting. 100% client-side & private.
+                </Typography>
+            </Box>
+
             <Grid container spacing={1.5}>
                 {/* Import */}
                 <Grid size={{ xs: 12, sm: 6, md: 'auto' }}>
@@ -373,7 +381,7 @@ const JsonValidator: React.FC = () => {
             </Grid>
 
             <Paper sx={{
-                flexGrow: 1,
+                height: { xs: '380px', md: '460px' },
                 border: '1px solid',
                 borderColor: 'divider',
                 overflow: 'hidden',

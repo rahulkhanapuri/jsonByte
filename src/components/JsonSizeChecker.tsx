@@ -11,7 +11,7 @@ import DataUsageIcon from '@mui/icons-material/DataUsage';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { useSnackbar } from 'notistack';
 import { useMediaQuery } from '@mui/material';
-import {usesizeValidatorStore} from '../stores/sizeValidatorStore';
+import { usesizeValidatorStore } from '../stores/sizeValidatorStore';
 const exampleJson = JSON.stringify(
     {
         user: { id: 101, name: "Rahul", role: "admin", active: true },
@@ -170,14 +170,14 @@ const JsonSizeChecker: React.FC = () => {
 
     return (
         <Box sx={{
-            height: 'calc(100vh - 200px)',
             display: 'flex',
             flexDirection: 'column',
             gap: 2,
-            maxWidth: '1000px',
+            maxWidth: '1100px',
             margin: '0 auto',
             width: '100%'
         }}>
+
             {/* Toolbar */}
             <Grid container spacing={1.5}>
                 <Grid size={{ xs: 12, sm: 6, md: 'auto' }}>
@@ -332,7 +332,7 @@ const JsonSizeChecker: React.FC = () => {
 
             {/* Editor */}
             <Paper sx={{
-                flexGrow: 1,
+                height: { xs: '380px', md: '440px' },
                 border: '1px solid',
                 borderColor: 'divider',
                 overflow: 'hidden',
@@ -379,6 +379,14 @@ const JsonSizeChecker: React.FC = () => {
                     }}
                 />
             </Paper>
+            <Box sx={{ mb: 1, textAlign: { xs: 'left', sm: 'center' } }}>
+                <Typography variant="h4" component="h1" fontWeight={800} gutterBottom>
+                    Free Online JSON Size Checker
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    Calculate exact JSON file and string size in Bytes, KB, and MB under UTF-8 encoding. 100% fast & private.
+                </Typography>
+            </Box>
         </Box>
     );
 };
