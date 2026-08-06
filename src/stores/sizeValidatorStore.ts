@@ -17,7 +17,7 @@ type ValidatorState = {
     reset: () => void;
 }
 
-export const usesizeValidatorStore = create<ValidatorState>()((set, get) => ({
+export const usesizeValidatorStore = create<ValidatorState>()((set) => ({
     jsonInput: "",
     setJsonInput: (input: string) => set({ jsonInput: input }),
     minifiedSize: null,

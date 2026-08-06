@@ -42,7 +42,7 @@ const JsonValidator: React.FC = () => {
     const buttonSize = isMobile ? 'small' : isTablet ? 'medium' : 'medium';
 
     //zustand store
-    const { jsonInput, setJsonInput, reset } = useValidatorStore();
+    const { jsonInput, setJsonInput } = useValidatorStore();
 
 
     const handleEditorChange = (value: string | undefined) => {

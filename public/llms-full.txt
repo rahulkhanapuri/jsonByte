@@ -1,0 +1,116 @@
+# JsonByte - Complete Documentation & Feature Context
+
+> JsonByte (https://jsonbyte.com) is a 100% free, browser-based JSON developer utility suite designed for high performance, privacy, and visual clarity.
+
+---
+
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Key Principles & Privacy](#key-principles--privacy)
+3. [Tool Specifications](#tool-specifications)
+   - [JSON Validator & Linter](#1-json-validator--linter)
+   - [JSON Formatter & Beautifier](#2-json-formatter--beautifier)
+   - [JSON Minifier & Compressor](#3-json-minifier--compressor)
+   - [JSON Converters (CSV, YAML, XML)](#4-json-converters-csv-yaml-xml)
+   - [JSON Size Checker (Bytes, KB, MB)](#5-json-size-checker-bytes-kb-mb)
+   - [JSON Graphical View](#6-json-graphical-view)
+4. [Technical Specifications](#technical-specifications)
+5. [URL Routing & Endpoints](#url-routing--endpoints)
+
+---
+
+## Overview
+
+JsonByte helps software engineers, API developers, data analysts, and LLM practitioners validate, format, convert, and visualize JSON structures without risking data exposure.
+
+---
+
+## Key Principles & Privacy
+
+- **Client-Side Execution**: All processing, parsing, validation, and rendering occur inside the client browser session.
+- **Zero Server Uploads**: No payload or user input is sent to external servers or stored in any database.
+- **High Performance**: Powered by Monaco Editor and web-standard string processing for fast execution even with large JSON documents.
+
+---
+
+## Tool Specifications
+
+### 1. JSON Validator & Linter
+- **Route**: `https://jsonbyte.com/json-validator` (also root `/`)
+- **Capabilities**:
+  - Instant syntax validation using standard JSON parsing algorithms.
+  - Precise line number and column position reporting for missing commas, unquoted keys, trailing commas, or brackets mismatch.
+  - Monaco code editor interface with syntax highlighting, line folding, and auto-closing pairs.
+
+### 2. JSON Formatter & Beautifier
+- **Route**: `https://jsonbyte.com/json-formatter`
+- **Capabilities**:
+  - Pretty-prints valid JSON strings.
+  - Customizable indentation settings (2 spaces, 4 spaces, tab indent).
+  - One-click copy formatted output or download as `.json` file.
+
+### 3. JSON Minifier & Compressor
+- **Route**: `https://jsonbyte.com/json-minifier`
+- **Capabilities**:
+  - Strips unnecessary whitespaces, newlines, and formatting spaces.
+  - Reduces JSON payload footprint for optimized API calls, local storage, and database storage.
+
+### 4. JSON Converters (CSV, YAML, XML)
+- **Routes**:
+  - `https://jsonbyte.com/json-to-csv`
+  - `https://jsonbyte.com/json-to-yaml`
+  - `https://jsonbyte.com/json-to-xml`
+- **Capabilities**:
+  - **JSON to CSV**: Converts array-of-objects or flat JSON objects to comma-separated values using PapaParse.
+  - **JSON to YAML**: Serializes JSON structure into clean YAML syntax using `js-yaml`.
+  - **JSON to XML**: Converts JSON trees into XML element nodes using `xml-js`.
+
+### 5. JSON Size Checker (Bytes, KB, MB)
+- **Routes**:
+  - `https://jsonbyte.com/json-size-checker`
+  - `https://jsonbyte.com/json-size-in-bytes`
+  - `https://jsonbyte.com/json-size-in-kb`
+  - `https://jsonbyte.com/json-size-in-mb`
+- **Capabilities**:
+  - Calculates exact UTF-8 byte count of JSON strings.
+  - Converts byte counts dynamically into KB (1 KB = 1024 Bytes) and MB (1 MB = 1024 KB).
+  - Displays payload statistics, key counts, nested depth, and size comparisons.
+
+### 6. JSON Graphical View
+- **Route**: `https://jsonbyte.com/json-graphical-view`
+- **Capabilities**:
+  - Visualizes complex JSON trees as interactive node-and-edge graphs using React Flow (`@xyflow/react`) and Dagre layout.
+  - Dynamic expand/collapse nodes for nested objects and arrays.
+  - Auto-layout calculation for clear hierarchical display.
+
+---
+
+## Technical Specifications
+
+- **Build Tools**: Vite, TypeScript, React 19
+- **UI Engine**: Material UI v7, Emotion
+- **Editor**: `@monaco-editor/react`
+- **Graphing Engine**: `@xyflow/react`, `dagre`
+- **State Management**: React state & custom hooks
+
+---
+
+## URL Routing & Endpoints
+
+| URL Path | Tool Function |
+| --- | --- |
+| `/` | Default Main Dashboard (Validator, Formatter, Converter) |
+| `/json-validator` | JSON Validation & Error Linting |
+| `/json-formatter` | JSON Pretty Printing & Formatting |
+| `/json-minifier` | JSON Minification & Compression |
+| `/json-to-csv` | JSON to CSV Data Conversion |
+| `/json-to-yaml` | JSON to YAML Data Conversion |
+| `/json-to-xml` | JSON to XML Data Conversion |
+| `/json-size-checker` | Universal JSON Size Calculator |
+| `/json-size-in-bytes` | JSON Size in Bytes View |
+| `/json-size-in-kb` | JSON Size in Kilobytes View |
+| `/json-size-in-mb` | JSON Size in Megabytes View |
+| `/json-graphical-view` | Visual Node Graph Diagram View |
+| `/llms.txt` | LLM Crawlers standard summary file |
+| `/llms-full.txt` | Full LLM Context & Specification file |

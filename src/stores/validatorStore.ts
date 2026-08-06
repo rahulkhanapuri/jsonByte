@@ -8,7 +8,7 @@ type ValidatorState = {
 }
 
 
-export const useValidatorStore = create<ValidatorState>((set, get) => ({
+export const useValidatorStore = create<ValidatorState>((set) => ({
             jsonInput: '',
             setJsonInput: (input: string) => set({ jsonInput: input }),
             reset: () => set({ 

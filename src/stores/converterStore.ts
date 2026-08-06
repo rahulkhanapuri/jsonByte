@@ -7,7 +7,7 @@ type converterState = {
     reset:() => void;
 }
 
-export const useConverterStore = create<converterState>((set, get) => ({
+export const useConverterStore = create<converterState>((set) => ({
             jsonInput: '',
             setJsonInput: (input: string) => set({ jsonInput: input }),
             reset: () => set({ 

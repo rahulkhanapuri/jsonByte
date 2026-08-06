@@ -1,0 +1,32 @@
+# JsonByte
+
+> JsonByte is a free, privacy-first web application for JSON validation, formatting, minification, conversion, graphical visualization, and payload size calculation.
+
+JsonByte processes JSON data 100% client-side in the browser using Monaco Editor, React 19, and Vite. No JSON data is ever transmitted to a server.
+
+## Features & Tools
+
+- [JSON Validator](https://jsonbyte.com/json-validator): Real-time JSON validation with exact line and column error highlighting.
+- [JSON Formatter](https://jsonbyte.com/json-formatter): Format and beautify raw JSON with configurable indentation (2 spaces, 4 spaces, tabs).
+- [JSON Minifier](https://jsonbyte.com/json-minifier): Minify and compress JSON strings to minimize whitespace for efficient network payloads.
+- [JSON to CSV Converter](https://jsonbyte.com/json-to-csv): Convert JSON arrays and objects into tabular CSV format for export and analysis.
+- [JSON to YAML Converter](https://jsonbyte.com/json-to-yaml): Convert JSON to YAML format with clean structure and proper indentation.
+- [JSON to XML Converter](https://jsonbyte.com/json-to-xml): Transform JSON data into valid XML format.
+- [JSON Size Checker](https://jsonbyte.com/json-size-checker): Calculate exact JSON file and string size in Bytes, KB, and MB based on UTF-8 encoding.
+- [JSON Size in Bytes](https://jsonbyte.com/json-size-in-bytes): Detailed byte count breakdown for JSON payloads.
+- [JSON Size in KB](https://jsonbyte.com/json-size-in-kb): Kilobyte size evaluation for web APIs and webhooks.
+- [JSON Size in MB](https://jsonbyte.com/json-size-in-mb): Megabyte size inspection for large dataset files.
+- [JSON Graphical View](https://jsonbyte.com/json-graphical-view): Interactive node-based graph visualizer powered by React Flow and Dagre.
+
+## Technical Architecture
+
+- **Frontend Framework**: React 19 + TypeScript + Vite
+- **UI Components**: Material UI (MUI v7), Emotion
+- **Code Editor**: Monaco Editor (@monaco-editor/react)
+- **Data Visualizer**: React Flow (@xyflow/react) with Dagre layout engine
+- **Parsers & Converters**: PapaParse (CSV), js-yaml (YAML), xml-js (XML)
+- **Privacy & Security**: All operations run completely locally in the browser engine. Zero data logging or remote server calls.
+
+## Documentation & Full Information
+
+- [Full LLM Context](https://jsonbyte.com/llms-full.txt): Comprehensive feature reference and detailed tool explanations.
